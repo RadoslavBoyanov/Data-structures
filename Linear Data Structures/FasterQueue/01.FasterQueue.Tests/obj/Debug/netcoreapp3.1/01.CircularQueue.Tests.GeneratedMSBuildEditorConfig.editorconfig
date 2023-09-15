@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = 01.CircularQueue.Tests
+build_property.ProjectDir = D:\Програмиране\Data Structures with C#\Fundamentals\Linear Data Structures\03. Linear-Data-Structures-Exercise-Skeleton\03. Linear-Data-Structures-Exercise-Skeleton\01.FasterQueue.Tests\
