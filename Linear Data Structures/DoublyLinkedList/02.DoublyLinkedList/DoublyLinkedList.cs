@@ -1,4 +1,4 @@
-﻿namespace Problem02.DoublyLinkedList
+namespace Problem02.DoublyLinkedList
 {
     using System;
     using System.Collections;
@@ -10,81 +10,137 @@
         private class Node
         {
             public Node Next { get; set; }
+
             public Node Previous { get; set; }
+
             public T Value { get; set; }
 
             public Node(T value)
             {
                 this.Value = value;
             }
+
         }
 
         private Node head;
         private Node tail;
 
+
         public int Count { get; private set; }
 
         public void AddFirst(T item)
         {
-            Node node = new Node(item);
-            if (this.head == null)
+            Node newNode = new Node(item);
+
+            if (this.Count== 0)
             {
-                this.head = node;
-                this.tail = node;
+                this.AddingIfIsEmtyList(item);
             }
             else
             {
-                this.head.Previous = node;
-                node.Next = this.head;
-                this.head = node;
-                Count++;
+                this.head.Previous = newNode;
+                newNode.Next = this.head;
+                this.head = newNode;
             }
+
+            this.Count++;
         }
 
         public void AddLast(T item)
         {
-            throw new NotImplementedException();
+            Node newNode = new Node(item);
+            if (this.Count == 0)
+            {
+                this.AddingIfIsEmtyList(item);
+            }
+            else
+            {
+                this.tail.Next = newNode;
+                newNode.Previous = this.tail;
+                this.tail = newNode;
+            }
+            this.Count++;
         }
 
         public T GetFirst()
         {
-            throw new NotImplementedException();
+            this.Validator();
+
+            return this.head.Value;
         }
 
         public T GetLast()
         {
-            throw new NotImplementedException();
+            this.Validator();
+
+            return this.tail.Value;
         }
 
         public T RemoveFirst()
         {
-            throw new NotImplementedException();
+            this.Validator();
+
+            Node current = this.head;
+
+            if (this.Count == 1)
+            {
+                this.head = this.tail = null;
+            }
+            else
+            {
+                this.head = this.head.Next;
+                this.head.Previous = null;
+            }
+            Count--;
+            return current.Value;
+            
         }
 
         public T RemoveLast()
         {
-            throw new NotImplementedException();
+            this.Validator();
+
+            Node current = this.tail;
+
+            if (this.Count == 1)
+            {
+                this.tail = this.head = null;
+            }
+            else
+            {
+                this.tail = this.tail.Previous;
+                this.tail.Next = null;
+            }
+            Count--;
+
+            return current.Value;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            Node currentNode = this.head;
-
-            while (currentNode != null)
+            Node current = this.head;
+            while (current != null)
             {
-                yield return currentNode.Value;
-                currentNode = currentNode.Next;
+                yield return current.Value; 
+                current = current.Next;     
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private void CheckIfDoblyLinkedListIsEmpty()
+        private void Validator()
         {
             if (this.Count == 0)
             {
                 throw new InvalidOperationException("Dobly Linked List is empty!");
             }
+        }
+
+        private void AddingIfIsEmtyList(T item)
+        {
+            Node newNode = new Node(item);
+            this.head = newNode;
+            this.tail = newNode;
         }
     }
 }
